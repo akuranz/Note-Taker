@@ -1,5 +1,6 @@
 // Dependencies
 // =============================================================
+const db = require("./db/db.json");
 const express = require("express");
 const path = require("path");
 
@@ -13,16 +14,20 @@ app.use(express.json());
 
 // Reservations (DATA)
 // =============================================================
-const notes = [];
+const notes = db;
 
 // Routes
 // =============================================================
+// app.use(function(req, res) {
+//   res.sendFile(path.join(__dirname, "./public/index.html"));
+// });
+
 app.get("/", function(req, res) {
-  res.sendFile(path.join(__dirname, "index.html"));
+  res.sendFile(path.join(__dirname, "./public/index.html"));
 });
 
 app.get("/notes", function(req, res) {
-  res.sendFile(path.join(__dirname, "notes.html"));
+  res.sendFile(path.join(__dirname, "./public/notes.html"));
 });
 
 //this should pull from db.json file
@@ -37,6 +42,13 @@ app.post("/api/notes", function(req, res) {
   notes.push(newNote);
   res.json(true);
 });
+
+// app.get(function(req, res) {
+//   notes.findById(req.params.notes_id, function(err, bear) {
+//     if (err) res.send(err);
+//     res.json(notes);
+//   });
+// });
 
 app.delete("/api/notes/:id", function(req, res) {
   const newNote = req.body;
